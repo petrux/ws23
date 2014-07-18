@@ -23,7 +23,7 @@ def home():
 
     if query:
         g = Graph()
-        urls = [str(u) for u in search(query, stop=10)]
+        urls = [str(u) for u in search(query, stop=30)]
         for u in urls:
             params = { "format": ANY23_FORMAT, "url": u }
             r = requests.get(ANY23URL, params=params)
