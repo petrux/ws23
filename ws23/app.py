@@ -16,7 +16,6 @@ APP = Flask(__name__)
 def home():
     reload(sys)
     sys.setdefaultencoding('utf-8')
-
     
     query = request.args.get("q")
     triples = []
@@ -30,13 +29,9 @@ def home():
             serialized_triples = r.text
             if TRIPLES_TOKEN in serialized_triples:
                 ts = serialized_triples.split(TRIPLES_SEP)
-                print str(len(ts)) + " triples for " + u
                 for t in ts:
                     g.parse(data=t, format=RDFLIB_FORMAT)
-        print "serializing all the " + str(len(g))+  " triples..."
         triples = g.serialize(format=RDFLIB_FORMAT).split("\n")
-        print "serializing all the " + str(len(triples))+  " triples..."
-        print "...done!"
     
     return render_template("search.html",
                            actual_query=query,
