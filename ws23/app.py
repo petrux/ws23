@@ -43,4 +43,6 @@ def home():
                            triples=triples)
 
 if __name__ == '__main__':
-    APP.run(debug=True, port=int(os.environ.get("PORT", "5000")))
+    APP.run(debug=True,
+            host="0.0.0.0",
+            port=int(os.environ.get("PORT", "5000")))
