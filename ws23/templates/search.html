@@ -1,0 +1,19 @@
+<html>
+  <head>
+    <title>ws23</title>
+  </head>
+  <body>
+    <h1>ws23: turn your web search into triples.</h1>
+    <form name="search" action="/" method="GET">
+      Search: <input type="text" name="q" value="{{ actual_query }}"/>
+      <input type="submit" value="Go!"/>
+    </form>
+    {% if triples %}
+    <!-- p>{{ triples }}</p -->
+    {% for t in triples %}
+    <span style="font-family: courier">{{ t }}</span><br/>
+    {% endfor %}
+    {% else %}
+    {% endif %}
+  </body>
+</html>
