@@ -1,1 +1,1 @@
-web: python ws23/app.py ${PORT}
+web: python ws23/app.py

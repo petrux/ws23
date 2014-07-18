@@ -3,6 +3,7 @@ from rdflib import Graph
 from google import search
 import requests
 import sys
+import os
 
 ANY23URL = "http://any23.org/any23/"
 ANY23_FORMAT = "ntriples"
@@ -42,4 +43,4 @@ def home():
                            triples=triples)
 
 if __name__ == '__main__':
-    APP.run(debug=True)
+    APP.run(debug=True, int(os.environ.get("PORT", "5000")))
