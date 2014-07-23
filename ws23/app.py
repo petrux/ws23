@@ -1,9 +1,8 @@
 from flask import Flask, render_template, request
-from rdflib import Graph
-from google import search
-import requests
+from ws23 import web_search_to_triples
 import sys
 import os
+
 
 ANY23URL = "http://any23.org/any23/"
 ANY23_FORMAT = "ntriples"
@@ -16,23 +15,8 @@ APP = Flask(__name__)
 def home():
     reload(sys)
     sys.setdefaultencoding('utf-8')
-    
     query = request.args.get("q")
-    triples = []
-
-    if query:
-        g = Graph()
-        urls = [str(u) for u in search(query, stop=10)]
-        for u in urls:
-            params = { "format": ANY23_FORMAT, "url": u }
-            r = requests.get(ANY23URL, params=params)
-            serialized_triples = r.text
-            if TRIPLES_TOKEN in serialized_triples:
-                ts = serialized_triples.split(TRIPLES_SEP)
-                for t in ts:
-                    g.parse(data=t, format=RDFLIB_FORMAT)
-        triples = g.serialize(format=RDFLIB_FORMAT).split("\n")
-    
+    triples = web_search_to_triples(query)
     return render_template("search.html",
                            actual_query=query,
                            triples=triples)
