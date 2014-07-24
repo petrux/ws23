@@ -15,7 +15,6 @@ def web_search_to_triples(query, num=30):
     """
     Returns: a list of n3-serialized RDF triples.
     """
-    print str("# ") + str(num)
     
     # return object
     triples = []
