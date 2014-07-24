@@ -9,3 +9,4 @@ The first draft has been developed in something less than 3 hours and this was p
 * [rdflib](https://github.com/RDFLib/rdflib): a Python library for working with RDF
 * [google.py](https://github.com/MarioVilas/google): a simple Python google search interface
 * [Amy23](https://any23.apache.org/) (Anything to Truples): an Apache project available both as a library and as a web service.
+* [RQ](http://python-rq.org/) a simple Python library for queueing jobs and processing them in background (requires [Redis](http://redis.io/) >= 2.6.0.)
