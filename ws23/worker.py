@@ -9,7 +9,7 @@ from rq import Worker, Queue, Connection
 
 listen = ["default"]
 
-url = "http://localhost:6379"
+url = os.getenv('REDISTOGO_URL', "http://localhost:6379")
 conn = redis.from_url(url)
 
 if __name__ == '__main__':
