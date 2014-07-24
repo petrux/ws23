@@ -11,18 +11,19 @@ TRIPLES_TOKEN = "> .\n"
 TRIPLES_SEP = "\n"
 RDFLIB_FORMAT = "n3"
 
-def web_search_to_triples(query, num=20):
+def web_search_to_triples(query, num=30):
     """
     Returns: a list of n3-serialized RDF triples.
     """
-
+    print str("# ") + str(num)
+    
     # return object
     triples = []
 
     # if query is defined... go!
     if query:
         g = Graph()
-        urls = [str(u) for u in search(query, stop=10)]
+        urls = [str(u) for u in search(query, stop=num)]
         for u in urls:
             params = { "format": ANY23_FORMAT, "url": u }
             r = requests.get(ANY23URL, params=params)
@@ -35,3 +36,14 @@ def web_search_to_triples(query, num=20):
 
     # return
     return triples
+
+if __name__ == '__main__':
+    import sys
+    query = sys.argv[1]
+    num = 10
+    if len(sys.argv) > 2:
+        num = int(sys.argv[2])
+    triples = web_search_to_triples(query, num=num)
+    
+    for t in triples:
+        print t

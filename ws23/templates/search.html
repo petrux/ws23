@@ -9,11 +9,15 @@
       <input type="submit" value="Go!"/>
     </form>
     {% if triples %}
-    <!-- p>{{ triples }}</p -->
-    {% for t in triples %}
-    <span style="font-family: courier">{{ t }}</span><br/>
-    {% endfor %}
+      {% for t in triples %}
+      <span style="font-family: courier">{{ t }}</span><br/>
+      {% endfor %}
+    {% elif job_key %}
+    <!-- reload -->
+    <p>job::{{ job_key }}</p>
+    <meta http-equiv="refresh" content="15; URL=/?q={{ actual_query }}&job_key={{ job_key }}">
     {% else %}
+    <p>Nothing!</p>
     {% endif %}
   </body>
 </html>
