@@ -24,13 +24,11 @@ def web_search_to_triples(query, num=30):
         g = Graph()
         urls = [str(u) for u in search(query, stop=num)]
         for u in urls:
+            print "##: " + str(u)
             params = { "format": ANY23_FORMAT, "url": u }
             r = requests.get(ANY23URL, params=params)
-            serialized_triples = r.text
-            if TRIPLES_TOKEN in serialized_triples:
-                ts = serialized_triples.split(TRIPLES_SEP)
-                for t in ts:
-                    g.parse(data=t, format=RDFLIB_FORMAT)
+            if TRIPLES_TOKEN in r.text:
+                g.parse(data=r.text, format=RDFLIB_FORMAT)
         triples = g.serialize(format=RDFLIB_FORMAT).split("\n")
 
     # return
