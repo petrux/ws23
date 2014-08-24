@@ -14,6 +14,9 @@ def url_fix(s, charset='utf-8'):
         s = s.encode(charset, 'ignore')
 
     scheme, netloc, path, qs, anchor = urlparse.urlsplit(s)
+    if not scheme:
+        return s
+    
     path = urllib.quote(path, '/%')
     qs = urllib.quote(qs, ':&=')
     fixed_url = urlparse.urlunsplit((scheme, netloc, path, qs, anchor))
