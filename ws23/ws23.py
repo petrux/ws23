@@ -28,6 +28,7 @@ def google_search(query, num):
         return results[:num]
     return results
 
+
 def any23(url, format=ANY23_FORMAT):
     """
     Return the triples extracted by Any23 from the given ``url`` in the specified ``format``.
@@ -45,6 +46,18 @@ def any23(url, format=ANY23_FORMAT):
     if TRIPLES_TOKEN in r.text:
         return r.text
     return ""
+
+
+def build_graph(data, format=RDFLIB_FORMAT):
+    """
+    Return a rdflib.Graph for the triples contained in ``data`` and parsed according to the given ``format``
+    """
+    
+    g = Graph()
+    if data:
+        g.parse(data=data, format=format)
+    return g
+
 
 def web_search_to_triples(query, num=30):
     """
@@ -66,6 +79,7 @@ def web_search_to_triples(query, num=30):
 
     # return
     return triples
+
 
 if __name__ == '__main__':
     import sys
