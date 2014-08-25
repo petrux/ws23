@@ -1,7 +1,7 @@
 ws23
 ====
 
-[ws23](https://github.com/petrux/ws23/) is a web app that can turn a web search result into a set of RDF triples: its name stands for *Web Search to Triples*, indeed. It has been developed for didactit purposes, just in order to try a minimal mimic of [Sig.ma](http://blog.sindice.com/2009/07/22/sigma-live-views-on-the-web-of-data/). Just type what you want and `ws23` will gather all the markup triples from the first pages resulting from a [Google](http://www.google.com) search.
+[ws23](https://github.com/petrux/ws23/) can turn a web search result into a set of RDF triples: its name stands for *Web Search to Triples*, indeed. It has been developed for didactic purposes, just in order to try a minimal mimic of [Sig.ma](http://blog.sindice.com/2009/07/22/sigma-live-views-on-the-web-of-data/). Just type what you want and `ws23` will gather all the markup triples from the first pages resulting from a [Google](http://www.google.com) search.
 
 The first draft has been developed in something less than 3 hours and this was possible thanks to third-party libraries and services such as:
 * [rdflib](https://github.com/RDFLib/rdflib): a Python library for working with RDF
