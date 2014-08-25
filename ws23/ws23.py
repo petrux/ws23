@@ -3,7 +3,9 @@ ws23 turns your web search into triples
 """
 import requests
 from rdflib import Graph
+from rdflib import term
 from google import search
+from utils import url_fix
 
 ANY23URL = "http://any23.org/any23/"
 ANY23_FORMAT = "ntriples"
@@ -50,13 +52,36 @@ def any23(url, format=ANY23_FORMAT):
 
 def build_graph(data, format=RDFLIB_FORMAT):
     """
-    Return a rdflib.Graph for the triples contained in ``data`` and parsed according to the given ``format``
+    Returns a rdflib.Graph for the triples contained in ``data`` and parsed according to the given ``format``
     """
     
     g = Graph()
     if data:
         g.parse(data=data, format=format)
     return g
+
+
+def sanitize_triple(t):
+    """
+    Returns a santized version of the given triple ``t``.
+    """
+    def sanitize_triple_item(item):
+        if isinstance(item, term.URIRef):
+            return term.URIRef(url_fix(str(item)))
+        return item
+    
+    return (sanitize_triple_item(t[0]),
+            sanitize_triple_item(t[1]),
+            sanitize_triple_item(t[2]))
+
+
+def sanitize_graph(g):
+    """
+    Returns a sanitized version of the given rdflib.Graph ``g``.
+    """
+    sg = Graph()
+    sg += [sanitize_triple(t) for t in g]
+    return sg
 
 
 def web_search_to_triples(query, num=30):
@@ -75,6 +100,7 @@ def web_search_to_triples(query, num=30):
             any23_result = any23(u)
             if any23_result:
                 g.parse(data=any23_result, format=RDFLIB_FORMAT)
+        g = sanitize_graph(g)
         triples = g.serialize(format=RDFLIB_FORMAT).split("\n")
 
     # return
