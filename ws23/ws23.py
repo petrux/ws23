@@ -11,6 +11,41 @@ TRIPLES_TOKEN = "> .\n"
 TRIPLES_SEP = "\n"
 RDFLIB_FORMAT = "n3"
 
+def google_search(query, num):
+    """
+    Return the first ``num`` results from the Google search for the given ``query``.
+
+    Arguments:
+        query: a query string
+    	num: the max number of results to be returned
+
+    Returns:
+    	an iterable of strings representing the resulting URLs
+    """
+    
+    results = [str(u) for u in search(query, stop=num)]
+    if len(results) > num:
+        return results[:num]
+    return results
+
+def any23(url, format=ANY23_FORMAT):
+    """
+    Return the triples extracted by Any23 from the given ``url`` in the specified ``format``.
+
+    Arguments:
+    	url: the url to be scanned
+    	format: the preferred format for the triples
+
+    Returns:
+    	the Any23 result in the form of plain text to be parsed into triples if any triple has returned, otherwise an empty string.
+    """
+    
+    params = { "format": format, "url": url }
+    r = requests.get(ANY23URL, params=params)
+    if TRIPLES_TOKEN in r.text:
+        return r.text
+    return ""
+
 def web_search_to_triples(query, num=30):
     """
     Returns: a list of n3-serialized RDF triples.
@@ -22,13 +57,11 @@ def web_search_to_triples(query, num=30):
     # if query is defined... go!
     if query:
         g = Graph()
-        urls = [str(u) for u in search(query, stop=num)]
-        for u in urls:
+        for u in google_search(query, num):
             print "##: " + str(u)
-            params = { "format": ANY23_FORMAT, "url": u }
-            r = requests.get(ANY23URL, params=params)
-            if TRIPLES_TOKEN in r.text:
-                g.parse(data=r.text, format=RDFLIB_FORMAT)
+            any23_result = any23(u)
+            if any23_result:
+                g.parse(data=any23_result, format=RDFLIB_FORMAT)
         triples = g.serialize(format=RDFLIB_FORMAT).split("\n")
 
     # return
