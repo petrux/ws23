@@ -6,7 +6,7 @@ Werkzeug==0.15.3
 argparse==1.2.1
 beautifulsoup4==4.3.2
 google==1.05
-html5lib==0.999
+html5lib==0.99999999
 isodate==0.5.0
 itsdangerous==0.24
 pyparsing==2.0.2
